@@ -1,25 +1,54 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
-// let roadLines1 = new Img1(0, 0, canvas.width, canvas.height);
-// let roadLines2 = new Img1(0, 200, canvas.width, canvas.height);
-// let roadLines3 = new Img1(0, 400, canvas.width, canvas.height);
 let player = new Player(180, 540);
-
-
-
 let enemies = [];
-let spawnEnemies = 10;
+let roadLines = [];
+let spawnEnemies = 80;
+let spawnRoadLines = 50;
+let timer1= 0;
 let timer = 0;
+let score = 0;
+let highScore = loadData("highScore")
 
 function randomNumber(min, max) {
     let rand = Math.floor(Math.random() * (max - min)) + min;
     return rand;
 }
+function createRoadLine(){
+    timer1++;
+    if (timer>spawnRoadLines){
+        let x = 200;
+        let y = -100;
+        let y1 = 0;
+        let y2 = 200;
+        let y3 = 400;
+        let roadLine = new RoadLine(x,y)
+        let roadLine1 = new RoadLine(x,y1);
+        let roadLine2 = new RoadLine(x,y2);
+        let roadLine3 = new RoadLine(x,y3);
+        roadLines.push(roadLine);
+        roadLines.push(roadLine1);
+        roadLines.push(roadLine2);
+        roadLines.push(roadLine3);
+        timer1 = 0;
+    }
+
+}
+function displayRoadLine(){
+    for (let i=0 ; i<roadLines.length;i++){
+        roadLines[i].draw();
+    }
+}
+function moveRoadLine(){
+    for(let i=0; i<roadLines.length;i++) {
+        roadLines[i].moveDown();
+    }
+}
 
 function createEnemies() {
     timer++;
     if (timer > spawnEnemies) {
-        let x = randomNumber(0, canvas.width);
+        let x = randomNumber(100, canvas.width-200);
         let y = randomNumber(-5, -15);
         let enemy = new Enemy(x, y);
         enemies.push(enemy);
@@ -47,13 +76,11 @@ function clearScreen() {
 }
 
 function movePlayer(evt) {
-    switch (evt.key) {
-        case "a":
+    switch (evt.keyCode) {
+        case 37:
             player.dir = "left";
-
             break;
-        case "d":
-
+        case 39:
             player.dir = "right";
             break;
         default:
@@ -64,16 +91,24 @@ function movePlayer(evt) {
 }
 
 window.addEventListener("keydown", movePlayer);
+function checkAllCollision(){
+    for (let i =0; i<enemies.length; i++){
+        if(checkCollision(player,enemies[i])){
+            alert("Game Over")
+        }
+        score ++;
+    }
+}
 function checkCollision(player , enemy) {
-    let left1 = player.x;
-    let right1 = player.x + player.width;
-    let top1 = player.y;
-    let bottom1 = player.y + player.height;
+    let left1 = player.x +20;
+    let right1 = player.x + player.width -20 ;
+    let top1 = player.y +20;
+    let bottom1 = player.y + player.height -20 ;
 
-    let left2 = enemy.x;
-    let right2 = enemy.x + enemy.width;
-    let top2 = enemy.y;
-    let bottom2 = enemy.y + enemy.height;
+    let left2 = enemy.x ;
+    let right2 = enemy.x + enemy.width ;
+    let top2 = enemy.y ;
+    let bottom2 = enemy.y + enemy.height  ;
 
     if(left1 > right2 || right1 < left2 || top1 > bottom2 || bottom1 < top2){
         return false;
@@ -82,23 +117,38 @@ function checkCollision(player , enemy) {
     }
 }
 
-
+function displayUI(){
+    document.getElementById("score").innerText = score;
+    document.getElementById("high-score").innerText = highScore;
+}
+function saveHighScore() {
+    if(score > highScore){
+        saveData("highScore",score);
+    }
+}
 
 function main() {
     clearScreen();
+    createRoadLine();
+    moveRoadLine();
+    displayRoadLine();
+
     createEnemies();
     displayEnemies();
     moveEnemies();
     player.move(canvas);
     player.draw(canvas);
-    checkCollision();
+    checkAllCollision();
+    displayUI();
+    saveHighScore();
 
-    // requestAnimationFrame(main);
+
+    requestAnimationFrame(main);
 
 }
 
-// main();
-setInterval(main, 200)
+main();
+// setInterval(main, 200)
 
 
 

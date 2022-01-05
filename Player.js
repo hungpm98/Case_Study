@@ -2,39 +2,27 @@ class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed = 10;
+        this.speed = 6;
         this.width = 50;
         this.height = 50;
         this.dir = "";
+        this.img = "img/player.png"
     }
 
     draw(canvas) {
         let myImg = new Image();
-        let a = this.x;
-        let b = this.y;
-
-
-
-        myImg.src = "img/player.png"
-        console.log(myImg.width, myImg.height)
-        ctx.beginPath();
-        myImg.onload = function () {
-            ctx.drawImage(myImg, a, b, 50, 50);
-        }
-
-        ctx.fill();
-        ctx.closePath();
-
+        myImg.src = this.img;
+            ctx.drawImage(myImg, this.x, this.y, 50, 50);
     }
 
     move(canvas) {
         switch (this.dir) {
             case "left":
-                if(this.x>0)
+                if(this.x>-8)
                     this.x -= this.speed;
                 break;
             case "right":
-                if (this.x < canvas.width - 50)
+                if (this.x < canvas.width - 42)
                     this.x += this.speed;
         }
     }
