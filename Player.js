@@ -1,16 +1,19 @@
 class Player {
-    constructor(x, y, width, height) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed= 3;
-        this.width = width;
-        this.height = height;
+        this.speed = 10;
+        this.width = 50;
+        this.height = 50;
+        this.dir = "";
     }
 
-    draw() {
+    draw(canvas) {
         let myImg = new Image();
         let a = this.x;
         let b = this.y;
+
+
 
         myImg.src = "img/player.png"
         console.log(myImg.width, myImg.height)
@@ -23,12 +26,26 @@ class Player {
         ctx.closePath();
 
     }
-    moveLeft(){
-        this.x -= this.speed;
+
+    move(canvas) {
+        switch (this.dir) {
+            case "left":
+                if(this.x>0)
+                    this.x -= this.speed;
+                break;
+            case "right":
+                if (this.x < canvas.width - 50)
+                    this.x += this.speed;
+        }
     }
-    moveRight(){
+    moveLeft()
+    {
+        this.x -= this.speed;
+    } moveRight()
+    {
         this.x += this.speed;
     }
 }
+
 
 

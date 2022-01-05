@@ -1,10 +1,10 @@
 class Enemy {
-    constructor(x, y, width, height) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.speed = 8;
+        this.width = 50;
+        this.height = 50;
+        this.speed = 20;
     }
 
     draw() {
@@ -23,7 +23,7 @@ class Enemy {
         ctx.closePath();
 
     }
-    move(){
+    moveDown(){
         this.y += this.speed;
     }
 

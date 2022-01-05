@@ -10,6 +10,7 @@ class Img1 {
         let myImg = new Image();
         let a = this.x;
         let b = this.y;
+        let ctx = canvas.getContext("2d");
 
         myImg.src = "img/1.jpg"
         let ratio = canvas.width / myImg.width

@@ -1,67 +1,105 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
-let roadLines1 = new Img1(0, 0, canvas.width, canvas.height);
-let roadLines2 = new Img1(0, 200, canvas.width, canvas.height);
-let roadLines3 = new Img1(0, 400, canvas.width, canvas.height);
-let player = new Player(200, 400, canvas.width, canvas.height)
+// let roadLines1 = new Img1(0, 0, canvas.width, canvas.height);
+// let roadLines2 = new Img1(0, 200, canvas.width, canvas.height);
+// let roadLines3 = new Img1(0, 400, canvas.width, canvas.height);
+let player = new Player(180, 540);
 
-let enemyS = [];
 
-function play() {
-    window.addEventListener("keydown", function (event) {
-        switch (event.keyCode) {
-            case 37:
-                if (player.x > 0) {
-                    player.moveLeft();
-                }
 
-                break;
-            case 39:
-                if (player.x < 350) {
-                    player.moveRight();
-                }
-                break;
-        }
-    })
-}
+let enemies = [];
+let spawnEnemies = 10;
+let timer = 0;
 
-function random(min, max) {
-    return parseInt(Math.random() * (max - min + 1) + min);
+function randomNumber(min, max) {
+    let rand = Math.floor(Math.random() * (max - min)) + min;
+    return rand;
 }
 
 function createEnemies() {
-    let num = random(1, 100);
-    if (num < 40) {
-        let enemy = new Enemy(random(0, canvas.width), -20, canvas.width, canvas.height)
-        enemyS.push(enemy);
+    timer++;
+    if (timer > spawnEnemies) {
+        let x = randomNumber(0, canvas.width);
+        let y = randomNumber(-5, -15);
+        let enemy = new Enemy(x, y);
+        enemies.push(enemy);
+        timer = 0;
+    }
+
+}
+
+
+function displayEnemies() {
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].draw();
     }
 }
 
-function showEnemies() {
-    for (let i = 0; i < enemyS.length; i++) {
-        if (enemyS[i].y >= enemyS[i].height) {
-            enemyS.splice(i, 1);
-            i--
-        } else {
-            enemyS[i].move();
-            enemyS[i].draw();
-        }
+function moveEnemies() {
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].moveDown();
+    }
+
+}
+
+function clearScreen() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function movePlayer(evt) {
+    switch (evt.key) {
+        case "a":
+            player.dir = "left";
+
+            break;
+        case "d":
+
+            player.dir = "right";
+            break;
+        default:
+            player.dir = "";
+
+
     }
 }
+
+window.addEventListener("keydown", movePlayer);
+function checkCollision(player , enemy) {
+    let left1 = player.x;
+    let right1 = player.x + player.width;
+    let top1 = player.y;
+    let bottom1 = player.y + player.height;
+
+    let left2 = enemy.x;
+    let right2 = enemy.x + enemy.width;
+    let top2 = enemy.y;
+    let bottom2 = enemy.y + enemy.height;
+
+    if(left1 > right2 || right1 < left2 || top1 > bottom2 || bottom1 < top2){
+        return false;
+    }else {
+        return true;
+    }
+}
+
 
 
 function main() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    player.draw();
-    play();
-    roadLines1.draw();
+    clearScreen();
     createEnemies();
-    showEnemies();
+    displayEnemies();
+    moveEnemies();
+    player.move(canvas);
+    player.draw(canvas);
+    checkCollision();
 
+    // requestAnimationFrame(main);
 
 }
 
-setInterval(main, 1000)
+// main();
+setInterval(main, 200)
+
 
 
 
