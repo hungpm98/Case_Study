@@ -141,8 +141,11 @@ function speedUp() {
         if (score > 1500) {
             enemies[i].y += 3;
         }
-        if (score > 3000) {
+        if (score > 5000) {
             enemies[i].y += 4;
+        }
+        if (score > 10000) {
+            enemies[i].y += 10;
         }
     }
 }
@@ -156,7 +159,6 @@ function main() {
     createEnemies();
     displayEnemies();
     moveEnemies();
-
     player.move(canvas);
     player.draw(canvas);
     checkAllCollision();

@@ -2,7 +2,7 @@ class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed = 4;
+        this.speed = 3;
         this.width = 50;
         this.height = 50;
         this.dir = "";

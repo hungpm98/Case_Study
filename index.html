@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .a{
+        .a {
             background: url("https://media2.giphy.com/media/xjIsb648nX0pw8kdBd/giphy.gif?cid=ecf05e472qln232uxnmdu8u10h3eno04v3dl3cs9ohh9u6ur&rid=giphy.gif&ct=g");
             background-size: cover;
         }
@@ -14,11 +14,12 @@
             background-color: black;
             background-size: cover;
         }
-            #ui-game{
+
+        #ui-game {
             position: absolute;
-                left: 20px;
-                top: 20px;
-            }
+            left: 20px;
+            top: 20px;
+        }
     </style>
     <script src="Enemy.js"></script>
     <script src="Player.js"></script>
@@ -29,8 +30,8 @@
 
 <body class="b">
 <img src="img/roadLine.jpg" style="display: none">
-<img src="img/player.png"  style="display: none">
-<img src="img/enemy.png"  style="display: none">
+<img src="img/player.png" style="display: none">
+<img src="img/enemy.png" style="display: none">
 <div id="ui-game">
     <span style="font-weight: bold;color: white">HighScore: </span>
     <span style="color: white" id="high-score">0</span>
@@ -38,11 +39,11 @@
     <span style="font-weight: bold; color: white">Score: </span>
     <span id="score" style="color: white">0</span>
 </div>
-<canvas class="a" id="myCanvas" width="600px" height="600px" style="border: 2px solid black"></canvas>
+<center><canvas class="a" id="myCanvas" width="600px" height="600px" style="border: 2px solid black"></canvas></center>
+
 <script src="RoadLine.js"></script>
 
 <script src="main.js"></script>
-
 
 
 </body>
