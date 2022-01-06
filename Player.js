@@ -2,7 +2,7 @@ class Player {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.speed = 6;
+        this.speed = 4;
         this.width = 50;
         this.height = 50;
         this.dir = "";
@@ -18,11 +18,11 @@ class Player {
     move(canvas) {
         switch (this.dir) {
             case "left":
-                if(this.x>-8)
+                if(this.x>175)
                     this.x -= this.speed;
                 break;
             case "right":
-                if (this.x < canvas.width - 42)
+                if (this.x < canvas.width - 230)
                     this.x += this.speed;
         }
     }

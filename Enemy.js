@@ -4,7 +4,7 @@ class Enemy {
         this.y = y;
         this.width = 50;
         this.height = 50;
-        this.speed = 3;
+        this.speed = 1;
         this.img = "img/enemy.png"
     }
 
